@@ -72,4 +72,23 @@ class UniqueBookingListTest {
     public void remove_nullBooking_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> uniqueBookingList.remove(null));
     }
+
+    @Test
+    public void remove_bookingDoesNotExist_throwsBookingNotFoundException() {
+        assertThrows(NotFoundException.class, () -> uniqueBookingList.remove(BOOKING_ALICE));
+    }
+
+    @Test
+    public void remove_existingBooking_removesBooking() throws NotFoundException {
+        uniqueBookingList.add(BOOKING_ALICE);
+        uniqueBookingList.remove(BOOKING_ALICE);
+        UniqueBookingList expectedUniqueBookingList = new UniqueBookingList();
+        assertEquals(expectedUniqueBookingList, uniqueBookingList);
+    }
+
+    @Test
+    public void asUnmodifiableObservableList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, ()
+            -> uniqueBookingList.asUnmodifiableObservableList().remove(0));
+    }
 }
