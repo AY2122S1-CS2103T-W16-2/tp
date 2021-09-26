@@ -18,6 +18,8 @@ public class BookingBuilder {
 
     /**
      * Initializes the BookingBuilder with the data of {@code bookingToCopy}.
+     *
+     * @param bookingToCopy The data from which to copy from to create a new booking.
      */
     public BookingBuilder(Booking bookingToCopy) {
         client = bookingToCopy.getClient();

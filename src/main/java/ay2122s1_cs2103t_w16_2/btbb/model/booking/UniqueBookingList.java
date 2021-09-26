@@ -28,6 +28,7 @@ public class UniqueBookingList implements Iterable<Booking> {
     /**
      * Returns true if the list contains an equivalent booking as the given argument.
      *
+     * @param toCheck The booking which is used to check.
      * @return True if the list contains an equivalent booking as the given argument. False otherwise.
      */
     public boolean contains(Booking toCheck) {
@@ -39,6 +40,10 @@ public class UniqueBookingList implements Iterable<Booking> {
      * Replaces the booking {@code target} in the list with {@code editedBooking}.
      * {@code target} must exist in the list.
      * The booking identity of {@code editedBooking} must not be the same as another existing booking in the list.
+     *
+     * @param target The target to change.
+     * @param editedBooking The replacement for target.
+     * @throws NotFoundException If the target cannot be found in the list.
      */
     public void setBooking(Booking target, Booking editedBooking) throws NotFoundException {
         requireAllNonNull(target, editedBooking);
@@ -54,6 +59,9 @@ public class UniqueBookingList implements Iterable<Booking> {
     /**
      * Removes the equivalent booking from the list.
      * The booking must exist in the list.
+     *
+     * @param toRemove The booking that will be used to determine what booking should be removed.
+     * @throws NotFoundException If no matching booking can be found.
      */
     public void remove(Booking toRemove) throws NotFoundException {
         requireNonNull(toRemove);
