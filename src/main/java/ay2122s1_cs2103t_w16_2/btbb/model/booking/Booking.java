@@ -24,7 +24,7 @@ public class Booking {
         this.client = client;
     }
 
-    private Client getClient() {
+    public Client getClient() {
         return client;
     }
 

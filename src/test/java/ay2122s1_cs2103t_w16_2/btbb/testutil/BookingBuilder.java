@@ -1,37 +1,40 @@
 package ay2122s1_cs2103t_w16_2.btbb.testutil;
 
 import ay2122s1_cs2103t_w16_2.btbb.model.booking.Booking;
-import ay2122s1_cs2103t_w16_2.btbb.model.client.Phone;
+import ay2122s1_cs2103t_w16_2.btbb.model.client.Client;
 
 /**
  * A utility class to help with building Booking objects.
  */
 public class BookingBuilder {
-    private Phone phone;
+    private Client client;
 
     /**
      * Creates a {@code BookingBuilder} with the default details.
      */
     public BookingBuilder() {
-        phone = new ClientBuilder().build().getPhone();
+        client = new ClientBuilder().build();
     }
 
     /**
      * Initializes the BookingBuilder with the data of {@code bookingToCopy}.
      */
     public BookingBuilder(Booking bookingToCopy) {
-        phone = bookingToCopy.getPhone();
+        client = bookingToCopy.getClient();
     }
 
     /**
-     * Sets the {@code Phone} of the {@code Booking} that we are building.
+     * Sets the {@code client} of the {@code BookingBuilder} that we are building.
+     *
+     * @param client The client associated with the booking we are building.
+     * @return The {@code BookingBuilder} object.
      */
-    public BookingBuilder withPhone(String phone) {
-        this.phone = new Phone(phone);
+    public BookingBuilder forClient(Client client) {
+        this.client = client;
         return this;
     }
 
     public Booking build() {
-        return new Booking(new ClientBuilder().withPhone(phone.toString()).build());
+        return new Booking(client);
     }
 }
