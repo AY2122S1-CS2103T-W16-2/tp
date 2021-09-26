@@ -43,4 +43,22 @@ public class BookingDescriptor {
 
         return new Booking(optionalClient.get());
     }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof BookingDescriptor)) {
+            return false;
+        }
+
+        // state check
+        BookingDescriptor bd = (BookingDescriptor) other;
+
+        return getPhone().equals(bd.getPhone());
+    }
 }

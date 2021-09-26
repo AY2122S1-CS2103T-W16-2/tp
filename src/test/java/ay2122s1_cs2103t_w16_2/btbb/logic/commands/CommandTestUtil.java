@@ -14,11 +14,13 @@ import java.util.List;
 
 import ay2122s1_cs2103t_w16_2.btbb.commons.core.index.Index;
 import ay2122s1_cs2103t_w16_2.btbb.exception.CommandException;
+import ay2122s1_cs2103t_w16_2.btbb.logic.descriptors.BookingDescriptor;
 import ay2122s1_cs2103t_w16_2.btbb.logic.descriptors.ClientDescriptor;
 import ay2122s1_cs2103t_w16_2.btbb.model.AddressBook;
 import ay2122s1_cs2103t_w16_2.btbb.model.Model;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Client;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.NameContainsKeywordsPredicate;
+import ay2122s1_cs2103t_w16_2.btbb.testutil.BookingDescriptorBuilder;
 import ay2122s1_cs2103t_w16_2.btbb.testutil.ClientDescriptorBuilder;
 
 /**
@@ -53,6 +55,8 @@ public class CommandTestUtil {
 
     public static final ClientDescriptor DESC_AMY;
     public static final ClientDescriptor DESC_BOB;
+    public static final BookingDescriptor DESC_BOOKING_AMY;
+    public static final BookingDescriptor DESC_BOOKING_BOB;
 
     static {
         DESC_AMY = new ClientDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -61,6 +65,8 @@ public class CommandTestUtil {
         DESC_BOB = new ClientDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .build();
+        DESC_BOOKING_AMY = new BookingDescriptorBuilder().withPhone(VALID_PHONE_AMY).build();
+        DESC_BOOKING_BOB = new BookingDescriptorBuilder().withPhone(VALID_PHONE_BOB).build();
     }
 
     /**
