@@ -3,6 +3,7 @@ package ay2122s1_cs2103t_w16_2.btbb.model.client;
 import static ay2122s1_cs2103t_w16_2.btbb.testutil.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
@@ -30,11 +31,11 @@ public class MembershipTest {
     public void newMembership_correctUserInput() {
         try {
             Membership sixMonthMembership = new Membership("01-01-2021", "6m");
-            assertEquals(sixMonthMembership.getStartDate(), LocalDate.parse("2021-01-01"));
-            assertEquals(sixMonthMembership.getEndDate(), LocalDate.parse("2021-07-01"));
+            assertEquals(LocalDate.parse("2021-01-01"), sixMonthMembership.getStartDate());
+            assertEquals(LocalDate.parse("2021-07-01"), sixMonthMembership.getEndDate());
             Membership oneYearMembership = new Membership("01-01-2021", "1y");
-            assertEquals(oneYearMembership.getStartDate(), LocalDate.parse("2021-01-01"));
-            assertEquals(oneYearMembership.getEndDate(), LocalDate.parse("2022-01-01"));
+            assertEquals(LocalDate.parse("2021-01-01"), oneYearMembership.getStartDate());
+            assertEquals(LocalDate.parse("2022-01-01"), oneYearMembership.getEndDate());
         } catch (IllegalValueException e) {
             e.printStackTrace();
         }
@@ -56,8 +57,8 @@ public class MembershipTest {
     public void newMembership_correctJsonInput() {
         try {
             Membership oneYearMembership = new Membership("01-01-2021 01-01-2022");
-            assertEquals(oneYearMembership.getStartDate(), LocalDate.parse("2021-01-01"));
-            assertEquals(oneYearMembership.getEndDate(), LocalDate.parse("2022-01-01"));
+            assertEquals(LocalDate.parse("2021-01-01"), oneYearMembership.getStartDate());
+            assertEquals(LocalDate.parse("2022-01-01"), oneYearMembership.getEndDate());
         } catch (IllegalValueException e) {
             e.printStackTrace();
         }
@@ -81,5 +82,33 @@ public class MembershipTest {
                 IllegalValueException.class, "Membership end date is earlier than start date in json.",
                 () -> new Membership("29-01-2022 29-01-2021")
         );
+    }
+
+    @Test
+    public void membershipToString() {
+        try {
+            assertEquals(
+                    "01-01-2021 01-01-2022",
+                    new Membership("01-01-2021", "1y").toString()
+            );
+        } catch (IllegalValueException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void membershipEquals() {
+        try {
+            assertEquals(
+                    new Membership("01-01-2021 01-01-2022"),
+                    new Membership("01-01-2021", "1y")
+            );
+            assertNotEquals(
+                    new Membership("01-01-2021 01-01-2022"),
+                    new Membership("01-01-2021", "1m")
+            );
+        } catch (IllegalValueException e) {
+            e.printStackTrace();
+        }
     }
 }
