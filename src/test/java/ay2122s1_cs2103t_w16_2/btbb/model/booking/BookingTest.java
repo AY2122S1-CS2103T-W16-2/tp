@@ -1,10 +1,7 @@
 package ay2122s1_cs2103t_w16_2.btbb.model.booking;
 
 import static ay2122s1_cs2103t_w16_2.btbb.testutil.TypicalBookings.BOOKING_ALICE;
-import static ay2122s1_cs2103t_w16_2.btbb.testutil.TypicalBookings.BOOKING_BENSON;
-import static ay2122s1_cs2103t_w16_2.btbb.testutil.TypicalBookings.BOOKING_CARL;
 import static ay2122s1_cs2103t_w16_2.btbb.testutil.TypicalBookings.BOOKING_DANIEL;
-import static ay2122s1_cs2103t_w16_2.btbb.testutil.TypicalClients.BOB;
 import static ay2122s1_cs2103t_w16_2.btbb.testutil.TypicalClients.FIONA;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -14,19 +11,6 @@ import org.junit.jupiter.api.Test;
 import ay2122s1_cs2103t_w16_2.btbb.testutil.BookingBuilder;
 
 class BookingTest {
-    @Test
-    public void isSameBooking() {
-        // same object -> returns true
-        assertTrue(BOOKING_ALICE.equals(BOOKING_ALICE));
-
-        // null -> returns false
-        assertFalse(BOOKING_BENSON.equals(null));
-
-        // different client -> returns false
-        Booking editedRandomBooking = new BookingBuilder().forClient(BOB).build();
-        assertFalse(BOOKING_CARL.equals(editedRandomBooking));
-    }
-
     @Test
     public void equals() {
         // same values -> returns true
