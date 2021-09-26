@@ -12,7 +12,11 @@ import ay2122s1_cs2103t_w16_2.btbb.model.client.Client;
  * A Model stub that always accepts the client being added.
  */
 public class ModelStubAcceptingClientAdded extends ModelStub {
-    public final ArrayList<Client> clientsAdded = new ArrayList<>();
+    private final ArrayList<Client> clientsAdded = new ArrayList<>();
+
+    public ArrayList<Client> getClientsAdded() {
+        return clientsAdded;
+    }
 
     @Override
     public boolean hasClient(Client client) {
