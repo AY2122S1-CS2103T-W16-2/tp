@@ -47,4 +47,11 @@ public class AddBookingCommand extends Command {
             throw new CommandException(MESSAGE_CLIENT_NOT_FOUND);
         }
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddBookingCommand // instanceof handles nulls
+                && bookingDescriptor.equals(((AddBookingCommand) other).bookingDescriptor));
+    }
 }
