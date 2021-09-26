@@ -1,7 +1,7 @@
 package ay2122s1_cs2103t_w16_2.btbb.storage;
 
 import static ay2122s1_cs2103t_w16_2.btbb.testutil.Assert.assertThrows;
-import static ay2122s1_cs2103t_w16_2.btbb.testutil.TypicalBookings.BOOKING_FIONA;
+import static ay2122s1_cs2103t_w16_2.btbb.testutil.TypicalBookings.BOOKING_FOR_FIONA;
 import static ay2122s1_cs2103t_w16_2.btbb.testutil.TypicalClients.FIONA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -23,13 +23,13 @@ class JsonAdaptedBookingTest {
     public void setUp() {
         addressBook = new AddressBook();
         addressBook.addClient(FIONA);
-        addressBook.addBooking(BOOKING_FIONA);
+        addressBook.addBooking(BOOKING_FOR_FIONA);
     }
 
     @Test
     public void toModelType_validBookingDetails_returnsBooking() throws Exception {
-        JsonAdaptedBooking booking = new JsonAdaptedBooking(BOOKING_FIONA);
-        assertEquals(BOOKING_FIONA, booking.toModelType(addressBook));
+        JsonAdaptedBooking booking = new JsonAdaptedBooking(BOOKING_FOR_FIONA);
+        assertEquals(BOOKING_FOR_FIONA, booking.toModelType(addressBook));
     }
 
     @Test

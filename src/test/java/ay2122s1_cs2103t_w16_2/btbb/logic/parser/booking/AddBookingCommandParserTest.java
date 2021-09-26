@@ -9,7 +9,7 @@ import static ay2122s1_cs2103t_w16_2.btbb.logic.commands.CommandTestUtil.PREAMBL
 import static ay2122s1_cs2103t_w16_2.btbb.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static ay2122s1_cs2103t_w16_2.btbb.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static ay2122s1_cs2103t_w16_2.btbb.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static ay2122s1_cs2103t_w16_2.btbb.testutil.TypicalBookings.BOOKING_BOB;
+import static ay2122s1_cs2103t_w16_2.btbb.testutil.TypicalBookings.BOOKING_FOR_BOB;
 
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +23,7 @@ class AddBookingCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        BookingDescriptor expectedBookingDescriptor = new BookingDescriptorBuilder(BOOKING_BOB).build();
+        BookingDescriptor expectedBookingDescriptor = new BookingDescriptorBuilder(BOOKING_FOR_BOB).build();
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + PHONE_DESC_BOB,
