@@ -3,6 +3,7 @@ package ay2122s1_cs2103t_w16_2.btbb.testutil;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Address;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Client;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Email;
+import ay2122s1_cs2103t_w16_2.btbb.model.client.Membership;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Name;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Phone;
 
@@ -14,11 +15,13 @@ public class ClientBuilder {
     private static final String DEFAULT_PHONE = "85355255";
     private static final String DEFAULT_EMAIL = "amy@gmail.com";
     private static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    private static final String DEFAULT_MEMBERSHIP = "01-01-2021 01-01-2022";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
+    private Membership membership;
 
     /**
      * Creates a {@code ClientBuilder} with the default details.
@@ -28,6 +31,7 @@ public class ClientBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
+        membership = new Membership(DEFAULT_MEMBERSHIP);
     }
 
     /**
@@ -38,6 +42,7 @@ public class ClientBuilder {
         phone = clientToCopy.getPhone();
         email = clientToCopy.getEmail();
         address = clientToCopy.getAddress();
+        membership = clientToCopy.getMembership();
     }
 
     /**
@@ -72,7 +77,15 @@ public class ClientBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Membership} of the {@code Client} that we are building.
+     */
+    public ClientBuilder withMembership(String membership) {
+        this.membership = new Membership(membership);
+        return this;
+    }
+
     public Client build() {
-        return new Client(name, phone, email, address);
+        return new Client(name, phone, email, address, membership);
     }
 }

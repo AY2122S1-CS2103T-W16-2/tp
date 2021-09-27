@@ -7,6 +7,7 @@ import ay2122s1_cs2103t_w16_2.btbb.exception.IllegalValueException;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Address;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Client;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Email;
+import ay2122s1_cs2103t_w16_2.btbb.model.client.Membership;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Name;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Phone;
 
@@ -20,17 +21,20 @@ class JsonAdaptedClient {
     private final String phone;
     private final String email;
     private final String address;
+    private final String membership;
 
     /**
      * Constructs a {@code JsonAdaptedClient} with the given client details.
      */
     @JsonCreator
     public JsonAdaptedClient(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-                             @JsonProperty("email") String email, @JsonProperty("address") String address) {
+                             @JsonProperty("email") String email, @JsonProperty("address") String address,
+                             @JsonProperty("membership") String membership) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.membership = membership;
     }
 
     /**
@@ -41,6 +45,7 @@ class JsonAdaptedClient {
         phone = source.getPhone().toString();
         email = source.getEmail().toString();
         address = source.getAddress().toString();
+        membership = source.getAddress().toString();
     }
 
     /**
@@ -81,6 +86,14 @@ class JsonAdaptedClient {
         }
         final Address modelAddress = new Address(address);
 
-        return new Client(modelName, modelPhone, modelEmail, modelAddress);
+        if (membership == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Membership.class.getSimpleName()));
+        }
+        if (!Membership.isValidMembershipJson(membership)) {
+            throw new IllegalValueException(Membership.MESSAGE_CONSTRAINTS);
+        }
+        final Membership modelMembership = new Membership(membership);
+
+        return new Client(modelName, modelPhone, modelEmail, modelAddress, modelMembership);
     }
 }

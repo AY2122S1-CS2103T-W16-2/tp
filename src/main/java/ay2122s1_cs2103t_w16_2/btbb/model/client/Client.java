@@ -16,16 +16,18 @@ public class Client {
 
     // Data fields
     private final Address address;
+    private final Membership membership;
 
     /**
      * Every field must be present and not null.
      */
-    public Client(Name name, Phone phone, Email email, Address address) {
-        requireAllNonNull(name, phone, email, address);
+    public Client(Name name, Phone phone, Email email, Address address, Membership membership) {
+        requireAllNonNull(name, phone, email, address, membership);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.membership = membership;
     }
 
     public Name getName() {
@@ -42,6 +44,10 @@ public class Client {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Membership getMembership() {
+        return membership;
     }
 
     /**
@@ -75,13 +81,14 @@ public class Client {
         return otherClient.getName().equals(getName())
                 && otherClient.getPhone().equals(getPhone())
                 && otherClient.getEmail().equals(getEmail())
-                && otherClient.getAddress().equals(getAddress());
+                && otherClient.getAddress().equals(getAddress())
+                && otherClient.getMembership().equals(getMembership());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address);
+        return Objects.hash(name, phone, email, address, membership);
     }
 
     @Override
@@ -93,7 +100,9 @@ public class Client {
                 .append("; Email: ")
                 .append(getEmail())
                 .append("; Address: ")
-                .append(getAddress());
+                .append(getAddress())
+                .append("; Membership: ")
+                .append(getMembership());
 
         return builder.toString();
     }

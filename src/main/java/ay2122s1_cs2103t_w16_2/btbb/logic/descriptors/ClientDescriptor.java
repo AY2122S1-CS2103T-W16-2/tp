@@ -8,6 +8,7 @@ import ay2122s1_cs2103t_w16_2.btbb.commons.util.CollectionUtil;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Address;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Client;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Email;
+import ay2122s1_cs2103t_w16_2.btbb.model.client.Membership;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Name;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Phone;
 
@@ -20,6 +21,7 @@ public class ClientDescriptor {
     private Phone phone;
     private Email email;
     private Address address;
+    private Membership membership;
 
     public ClientDescriptor() {}
 
@@ -73,6 +75,14 @@ public class ClientDescriptor {
         return Optional.ofNullable(address);
     }
 
+    public void setMembership(Membership membership) {
+        this.membership = membership;
+    }
+
+    public Optional<Membership> getMembership() {
+        return Optional.ofNullable(membership);
+    }
+
     /**
      * Converts a Client Descriptor to a Client model type.
      * All non null fields must be present before conversion.
@@ -80,8 +90,8 @@ public class ClientDescriptor {
      * @return {@code Client}.
      */
     public Client toModelType() {
-        requireAllNonNull(name, phone, email, address);
-        return new Client(name, phone, email, address);
+        requireAllNonNull(name, phone, email, address, membership);
+        return new Client(name, phone, email, address, membership);
     }
 
     /**
@@ -98,8 +108,9 @@ public class ClientDescriptor {
         Phone updatedPhone = getPhone().orElse(existingClient.getPhone());
         Email updatedEmail = getEmail().orElse(existingClient.getEmail());
         Address updatedAddress = getAddress().orElse(existingClient.getAddress());
+        Membership updatedMembership = getMembership().orElse(existingClient.getMembership());
 
-        return new Client(updatedName, updatedPhone, updatedEmail, updatedAddress);
+        return new Client(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedMembership);
     }
 
     @Override
@@ -120,6 +131,7 @@ public class ClientDescriptor {
         return getName().equals(e.getName())
                 && getPhone().equals(e.getPhone())
                 && getEmail().equals(e.getEmail())
-                && getAddress().equals(e.getAddress());
+                && getAddress().equals(e.getAddress())
+                && getMembership().equals(e.getMembership());
     }
 }

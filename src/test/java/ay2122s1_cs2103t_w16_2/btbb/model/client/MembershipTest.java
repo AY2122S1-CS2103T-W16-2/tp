@@ -10,8 +10,6 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
-import ay2122s1_cs2103t_w16_2.btbb.exception.IllegalValueException;
-
 public class MembershipTest {
     @Test
     public void isValidMembershipDate() {
@@ -29,86 +27,70 @@ public class MembershipTest {
 
     @Test
     public void newMembership_correctUserInput() {
-        try {
-            Membership sixMonthMembership = new Membership("01-01-2021", "6m");
-            assertEquals(LocalDate.parse("2021-01-01"), sixMonthMembership.getStartDate());
-            assertEquals(LocalDate.parse("2021-07-01"), sixMonthMembership.getEndDate());
-            Membership oneYearMembership = new Membership("01-01-2021", "1y");
-            assertEquals(LocalDate.parse("2021-01-01"), oneYearMembership.getStartDate());
-            assertEquals(LocalDate.parse("2022-01-01"), oneYearMembership.getEndDate());
-        } catch (IllegalValueException e) {
-            e.printStackTrace();
-        }
+        Membership sixMonthMembership = new Membership("01-01-2021", "6m");
+        assertEquals(LocalDate.parse("2021-01-01"), sixMonthMembership.getStartDate());
+        assertEquals(LocalDate.parse("2021-07-01"), sixMonthMembership.getEndDate());
+        Membership oneYearMembership = new Membership("01-01-2021", "1y");
+        assertEquals(LocalDate.parse("2021-01-01"), oneYearMembership.getStartDate());
+        assertEquals(LocalDate.parse("2022-01-01"), oneYearMembership.getEndDate());
     }
 
     @Test
     public void newMembership_wrongUserInput_exceptionThrown() {
         assertThrows(
-                IllegalValueException.class, "Invalid format for membership start date",
+                IllegalArgumentException.class, "Invalid format for membership start date",
                 () -> new Membership("29-02-2021", "6m")
         );
         assertThrows(
-                IllegalValueException.class, "Period is in invalid format.",
+                IllegalArgumentException.class, "Period is in invalid format.",
                 () -> new Membership("29-01-2021", "6")
         );
     }
 
     @Test
     public void newMembership_correctJsonInput() {
-        try {
-            Membership oneYearMembership = new Membership("01-01-2021 01-01-2022");
-            assertEquals(LocalDate.parse("2021-01-01"), oneYearMembership.getStartDate());
-            assertEquals(LocalDate.parse("2022-01-01"), oneYearMembership.getEndDate());
-        } catch (IllegalValueException e) {
-            e.printStackTrace();
-        }
+        Membership oneYearMembership = new Membership("01-01-2021 01-01-2022");
+        assertEquals(LocalDate.parse("2021-01-01"), oneYearMembership.getStartDate());
+        assertEquals(LocalDate.parse("2022-01-01"), oneYearMembership.getEndDate());
     }
 
     @Test
     public void newMembership_wrongJsonInput_exceptionThrown() {
         assertThrows(
-                IllegalValueException.class, "Invalid JSON input for membership",
+                IllegalArgumentException.class, "Invalid JSON input for membership",
                 () -> new Membership("2021-02-21 2021-02-22")
         );
         assertThrows(
-                IllegalValueException.class, "Invalid start date in membership json",
+                IllegalArgumentException.class, "Invalid start date in membership json",
                 () -> new Membership("29-02-2021 01-01-2022")
         );
         assertThrows(
-                IllegalValueException.class, "Invalid end date in membership json",
+                IllegalArgumentException.class, "Invalid end date in membership json",
                 () -> new Membership("29-01-2021 29-02-2021")
         );
         assertThrows(
-                IllegalValueException.class, "Membership end date is earlier than start date in json.",
+                IllegalArgumentException.class, "Membership end date is earlier than start date in JSON",
                 () -> new Membership("29-01-2022 29-01-2021")
         );
     }
 
     @Test
     public void membershipToString() {
-        try {
-            assertEquals(
-                    "01-01-2021 01-01-2022",
-                    new Membership("01-01-2021", "1y").toString()
-            );
-        } catch (IllegalValueException e) {
-            e.printStackTrace();
-        }
+        assertEquals(
+                "01-01-2021 01-01-2022",
+                new Membership("01-01-2021", "1y").toString()
+        );
     }
 
     @Test
     public void membershipEquals() {
-        try {
-            assertEquals(
-                    new Membership("01-01-2021 01-01-2022"),
-                    new Membership("01-01-2021", "1y")
-            );
-            assertNotEquals(
-                    new Membership("01-01-2021 01-01-2022"),
-                    new Membership("01-01-2021", "1m")
-            );
-        } catch (IllegalValueException e) {
-            e.printStackTrace();
-        }
+        assertEquals(
+                new Membership("01-01-2021 01-01-2022"),
+                new Membership("01-01-2021", "1y")
+        );
+        assertNotEquals(
+                new Membership("01-01-2021 01-01-2022"),
+                new Membership("01-01-2021", "1m")
+        );
     }
 }
