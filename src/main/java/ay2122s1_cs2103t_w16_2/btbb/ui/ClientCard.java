@@ -12,6 +12,8 @@ import javafx.scene.layout.Region;
 public class ClientCard extends UiPart<Region> {
     private static final String FXML = "ClientListCard.fxml";
 
+    private static final String TEXT_ERROR = "error";
+    private static final String TEXT_SUCESS = "success";
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -34,6 +36,8 @@ public class ClientCard extends UiPart<Region> {
     private Label address;
     @FXML
     private Label email;
+    @FXML
+    private Label membership;
 
     /**
      * Creates a {@code ClientCode} with the given {@code Client} and index to display.
@@ -46,6 +50,14 @@ public class ClientCard extends UiPart<Region> {
         phone.setText(client.getPhone().toString());
         address.setText(client.getAddress().toString());
         email.setText(client.getEmail().toString());
+
+        if (client.getMembership().isExpired()) {
+            membership.setText("Membership Expired");
+            membership.getStyleClass().add(TEXT_ERROR);
+        } else {
+            membership.setText("Expiry: " + client.getMembership().getEndDateInUiFormat());
+            membership.getStyleClass().add(TEXT_SUCESS);
+        }
     }
 
     @Override

@@ -80,8 +80,8 @@ public class ClientBuilder {
     /**
      * Sets the {@code Membership} of the {@code Client} that we are building.
      */
-    public ClientBuilder withMembership(String membership) {
-        this.membership = new Membership(membership);
+    public ClientBuilder withMembership(String startDate, String period) {
+        this.membership = new Membership(startDate, period);
         return this;
     }
 

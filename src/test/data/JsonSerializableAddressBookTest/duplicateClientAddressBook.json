@@ -3,12 +3,14 @@
     "name": "Alice Pauline",
     "phone": "94351253",
     "email": "alice@example.com",
-    "address": "123, Jurong West Ave 6, #08-111"
+    "address": "123, Jurong West Ave 6, #08-111",
+    "membership": "01-01-2021 01-07-2021"
   }, {
     "name": "Alice Pauline",
     "phone": "94351253",
     "email": "pauline@example.com",
-    "address": "4th street"
+    "address": "4th street",
+    "membership": "01-01-2021 01-07-2021"
   } ],
   "bookings": []
 }

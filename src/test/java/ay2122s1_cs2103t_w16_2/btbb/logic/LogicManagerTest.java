@@ -4,6 +4,8 @@ import static ay2122s1_cs2103t_w16_2.btbb.commons.core.Messages.MESSAGE_INVALID_
 import static ay2122s1_cs2103t_w16_2.btbb.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static ay2122s1_cs2103t_w16_2.btbb.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static ay2122s1_cs2103t_w16_2.btbb.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
+import static ay2122s1_cs2103t_w16_2.btbb.logic.commands.CommandTestUtil.MEMBERSHIP_PERIOD_DESC_AMY;
+import static ay2122s1_cs2103t_w16_2.btbb.logic.commands.CommandTestUtil.MEMBERSHIP_START_DATE_DESC_AMY;
 import static ay2122s1_cs2103t_w16_2.btbb.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static ay2122s1_cs2103t_w16_2.btbb.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static ay2122s1_cs2103t_w16_2.btbb.testutil.Assert.assertThrows;
@@ -80,7 +82,7 @@ public class LogicManagerTest {
 
         // Execute add command
         String addCommand = AddClientCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY;
+                + ADDRESS_DESC_AMY + MEMBERSHIP_START_DATE_DESC_AMY + MEMBERSHIP_PERIOD_DESC_AMY;
         Client expectedClient = new ClientBuilder(AMY).build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addClient(expectedClient);

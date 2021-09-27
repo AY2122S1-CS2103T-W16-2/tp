@@ -2,6 +2,8 @@ package ay2122s1_cs2103t_w16_2.btbb.testutil;
 
 import static ay2122s1_cs2103t_w16_2.btbb.logic.parser.util.CliSyntax.PREFIX_ADDRESS;
 import static ay2122s1_cs2103t_w16_2.btbb.logic.parser.util.CliSyntax.PREFIX_EMAIL;
+import static ay2122s1_cs2103t_w16_2.btbb.logic.parser.util.CliSyntax.PREFIX_MEMBERSHIP_PERIOD;
+import static ay2122s1_cs2103t_w16_2.btbb.logic.parser.util.CliSyntax.PREFIX_MEMBERSHIP_START_DATE;
 import static ay2122s1_cs2103t_w16_2.btbb.logic.parser.util.CliSyntax.PREFIX_NAME;
 import static ay2122s1_cs2103t_w16_2.btbb.logic.parser.util.CliSyntax.PREFIX_PHONE;
 
@@ -29,6 +31,8 @@ public class ClientUtil {
         sb.append(PREFIX_PHONE + client.getPhone().toString() + " ");
         sb.append(PREFIX_EMAIL + client.getEmail().toString() + " ");
         sb.append(PREFIX_ADDRESS + client.getAddress().toString() + " ");
+        sb.append(PREFIX_MEMBERSHIP_START_DATE + client.getMembership().getStartDateInInputFormat() + " ");
+        sb.append(PREFIX_MEMBERSHIP_PERIOD + client.getMembership().getPeriod());
         return sb.toString();
     }
 
@@ -41,6 +45,10 @@ public class ClientUtil {
         descriptor.getPhone().ifPresent(phone -> sb.append(PREFIX_PHONE).append(phone).append(" "));
         descriptor.getEmail().ifPresent(email -> sb.append(PREFIX_EMAIL).append(email).append(" "));
         descriptor.getAddress().ifPresent(address -> sb.append(PREFIX_ADDRESS).append(address).append(" "));
+        descriptor.getMembership().ifPresent(
+            membership -> sb.append(PREFIX_MEMBERSHIP_START_DATE).append(membership.getStartDateInInputFormat())
+                    .append(" ").append(PREFIX_MEMBERSHIP_PERIOD).append(membership.getPeriod())
+        );
         return sb.toString();
     }
 }

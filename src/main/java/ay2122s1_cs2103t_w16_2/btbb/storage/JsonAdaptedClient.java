@@ -45,7 +45,7 @@ class JsonAdaptedClient {
         phone = source.getPhone().toString();
         email = source.getEmail().toString();
         address = source.getAddress().toString();
-        membership = source.getAddress().toString();
+        membership = source.getMembership().toString();
     }
 
     /**
@@ -87,7 +87,10 @@ class JsonAdaptedClient {
         final Address modelAddress = new Address(address);
 
         if (membership == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Membership.class.getSimpleName()));
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Membership.class.getSimpleName())
+            );
         }
         if (!Membership.isValidMembershipJson(membership)) {
             throw new IllegalValueException(Membership.MESSAGE_CONSTRAINTS);

@@ -2,7 +2,8 @@ package ay2122s1_cs2103t_w16_2.btbb.model.client;
 
 import static ay2122s1_cs2103t_w16_2.btbb.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static ay2122s1_cs2103t_w16_2.btbb.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static ay2122s1_cs2103t_w16_2.btbb.logic.commands.CommandTestUtil.VALID_MEMBERSHIP_BOB;
+import static ay2122s1_cs2103t_w16_2.btbb.logic.commands.CommandTestUtil.VALID_MEMBERSHIP_PERIOD_BOB;
+import static ay2122s1_cs2103t_w16_2.btbb.logic.commands.CommandTestUtil.VALID_MEMBERSHIP_START_DATE_BOB;
 import static ay2122s1_cs2103t_w16_2.btbb.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static ay2122s1_cs2103t_w16_2.btbb.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static ay2122s1_cs2103t_w16_2.btbb.testutil.TypicalClients.ALICE;
@@ -25,7 +26,8 @@ public class ClientTest {
 
         // same phone, all other attributes different -> returns true
         Client editedAlice = new ClientBuilder(ALICE).withName(VALID_NAME_BOB).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_BOB).withMembership(VALID_MEMBERSHIP_BOB).build();
+                .withAddress(VALID_ADDRESS_BOB)
+                .withMembership(VALID_MEMBERSHIP_START_DATE_BOB, VALID_MEMBERSHIP_PERIOD_BOB).build();
         assertTrue(ALICE.isSameClient(editedAlice));
 
         // different phone, all other attributes same -> returns false
@@ -68,7 +70,8 @@ public class ClientTest {
         assertFalse(ALICE.equals(editedAlice));
 
         // different membership -> returns false
-        editedAlice = new ClientBuilder(ALICE).withMembership(VALID_MEMBERSHIP_BOB).build();
+        editedAlice = new ClientBuilder(ALICE)
+                .withMembership(VALID_MEMBERSHIP_START_DATE_BOB, VALID_MEMBERSHIP_PERIOD_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
     }
 }

@@ -4,6 +4,7 @@ import ay2122s1_cs2103t_w16_2.btbb.logic.descriptors.ClientDescriptor;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Address;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Client;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Email;
+import ay2122s1_cs2103t_w16_2.btbb.model.client.Membership;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Name;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Phone;
 
@@ -30,6 +31,7 @@ public class ClientDescriptorBuilder {
         descriptor.setPhone(client.getPhone());
         descriptor.setEmail(client.getEmail());
         descriptor.setAddress(client.getAddress());
+        descriptor.setMembership(client.getMembership());
     }
 
     /**
@@ -61,6 +63,14 @@ public class ClientDescriptorBuilder {
      */
     public ClientDescriptorBuilder withAddress(String address) {
         descriptor.setAddress(new Address(address));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Membership} of the {@code EditClientDescriptor} that we are building.
+     */
+    public ClientDescriptorBuilder withMembership(String startDate, String period) {
+        descriptor.setMembership(new Membership(startDate, period));
         return this;
     }
 

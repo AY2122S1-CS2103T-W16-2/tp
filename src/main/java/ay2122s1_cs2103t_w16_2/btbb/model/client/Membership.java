@@ -4,6 +4,7 @@ import static ay2122s1_cs2103t_w16_2.btbb.commons.util.AppUtil.checkArgument;
 import static ay2122s1_cs2103t_w16_2.btbb.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
@@ -13,23 +14,24 @@ import java.time.format.ResolverStyle;
  * Guarantees: immutable; is valid as declared in {@link #isValidMembershipJson(String)}
  */
 public class Membership {
+    public static final String MESSAGE_CONSTRAINTS = "Membership should be of the format "
+            + "m/start-date pe/period "
+            + "and adhere to the following constraints:\n"
+            + "1. The start-date must be of the format DD-MM-YYYY.\n"
+            + "2. The period must be in the format <number><unit> where unit must be either m or y.\n"
+            + "Examples of input:\n"
+            + "    - m/12-01-2020 pe/6m (a membership that starts in 12 January 2020 and ends 6 months later)\n";
+
+    private static final String JSON_VALIDATION_REGEX = "^\\d{2}-\\d{2}-\\d{4}\\s+\\d{2}-\\d{2}-\\d{4}$";
+    private static final String PERIOD_VALIDATION_REGEX = "^\\d+[my]$";
+
+    private static final DateTimeFormatter MEMBERSHIP_INPUT_DATE_FORMATTER =
+            DateTimeFormatter.ofPattern("dd-MM-uuuu").withResolverStyle(ResolverStyle.STRICT);
+    private static final DateTimeFormatter MEMBERSHIP_UI_DATE_FORMATTER =
+            DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT);
+
     private final LocalDate startDate;
     private final LocalDate endDate;
-
-    public static final String MESSAGE_CONSTRAINTS = "Membership should be of the formats "
-            + "start-date<space>offset or start-date<space>end-date"
-            + "and adhere to the following constraints:\n"
-            + "1. The start-date and end-date must be of the format DD-MM-YYYY.\n"
-            + "2. The offset must be in the format <number><unit> where unit must be either d, w, m or y.\n"
-            + "Examples of input:\n"
-            + "    - 12-01-2020 12-03-2020 (a membership that starts in 12 January 2020 and ends in 12 March 2020)\n"
-            + "    - 12-01-2020 6m (a membership that starts in 12 January 2020 and ends 6 months later)\n";
-
-    private static final String PERIOD_VALIDATION_REGEX = "^\\d+[my]$";
-    private static final String JSON_VALIDATION_REGEX = "^\\d{2}-\\d{2}-\\d{4}\\s+\\d{2}-\\d{2}-\\d{4}$";
-
-    private static final DateTimeFormatter MEMBERSHIP_DATE_FORMATTER =
-            DateTimeFormatter.ofPattern("dd-MM-uuuu").withResolverStyle(ResolverStyle.STRICT);
 
     /**
      * Constructs a Membership instance with a start date and the end date.
@@ -54,13 +56,13 @@ public class Membership {
     public Membership(String startDateInput, String period) {
         requireAllNonNull(startDateInput, period);
         checkArgument(isValidMembershipDate(startDateInput), "Invalid format for membership start date");
-        this.startDate = LocalDate.parse(startDateInput, MEMBERSHIP_DATE_FORMATTER);
+        this.startDate = LocalDate.parse(startDateInput, MEMBERSHIP_INPUT_DATE_FORMATTER);
         this.endDate = calculateEndDate(this.startDate, period);
     }
 
     /**
      * Constructs a Membership instance from its JSON representation. The JSON representation
-     * of the membership is in the following format: "startDate<space>endDate".
+     * of the membership is in the following format: "startDate endDate".
      *
      * @param json The json representation of the membership.
      */
@@ -68,13 +70,9 @@ public class Membership {
         requireAllNonNull(json);
         checkArgument(isValidMembershipJson(json), "Invalid JSON input for membership");
 
-        String [] args = json.split("\\s+");
-        checkArgument(isValidMembershipDate(args[0]), "Invalid start date in membership json");
-        checkArgument(isValidMembershipDate(args[1]), "Invalid end date in membership json");
-
-        LocalDate startDate = LocalDate.parse(args[0], MEMBERSHIP_DATE_FORMATTER);
-        LocalDate endDate = LocalDate.parse(args[1], MEMBERSHIP_DATE_FORMATTER);
-        checkArgument(endDate.isAfter(startDate), "Membership end date is earlier than start date in JSON");
+        String [] dates = json.split("\\s+");
+        LocalDate startDate = LocalDate.parse(dates[0], MEMBERSHIP_INPUT_DATE_FORMATTER);
+        LocalDate endDate = LocalDate.parse(dates[1], MEMBERSHIP_INPUT_DATE_FORMATTER);
 
         this.startDate = startDate;
         this.endDate = endDate;
@@ -129,7 +127,7 @@ public class Membership {
     public static boolean isValidMembershipDate(String dateInput) {
         requireAllNonNull(dateInput);
         try {
-            LocalDate.parse(dateInput, MEMBERSHIP_DATE_FORMATTER);
+            LocalDate.parse(dateInput, MEMBERSHIP_INPUT_DATE_FORMATTER);
             return true;
         } catch (DateTimeParseException e) {
             return false;
@@ -137,7 +135,7 @@ public class Membership {
     }
 
     /**
-     * Returns true if the provided period matches the format <number><unit> where unit is either "m" or "y".
+     * Returns true if the provided period matches the format number followed by unit which is either "m" or "y".
      *
      * @param period The period to check.
      *
@@ -150,7 +148,7 @@ public class Membership {
 
     /**
      * Returns true if the provided JSON representation of a membership matches the
-     * format: start_date<space>end_date
+     * format: "start_date end_date". Also checks if end date is after start date.
      *
      * @param json The json representation of the membership to check
      *
@@ -158,7 +156,72 @@ public class Membership {
      */
     public static boolean isValidMembershipJson(String json) {
         requireAllNonNull(json);
-        return json.matches(JSON_VALIDATION_REGEX);
+        if (!json.matches(JSON_VALIDATION_REGEX)) {
+            return false;
+        }
+        String [] dates = json.split("\\s+");
+        try {
+            LocalDate startDate = LocalDate.parse(dates[0], MEMBERSHIP_INPUT_DATE_FORMATTER);
+            LocalDate endDate = LocalDate.parse(dates[1], MEMBERSHIP_INPUT_DATE_FORMATTER);
+            return endDate.isAfter(startDate);
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns true if this membership has expired by comparing with the current date.
+     *
+     * @return true if this membership has expired.
+     */
+    public boolean isExpired() {
+        return !endDate.isAfter(LocalDate.now());
+    }
+
+    /**
+     * Returns a String representation of the start date in input format: DD-MM-YYYY.
+     *
+     * @return a String representation of the start date in input format.
+     */
+    public String getStartDateInInputFormat() {
+        return startDate.format(MEMBERSHIP_INPUT_DATE_FORMATTER);
+    }
+
+    /**
+     * Returns a String representation of the start date in UI format: DD/MM/YYYY.
+     *
+     * @return a String representation of the start date in UI format.
+     */
+    public String getStartDateInUiFormat() {
+        return startDate.format(MEMBERSHIP_UI_DATE_FORMATTER);
+    }
+
+    /**
+     * Returns a String representation of the end date in input format: DD-MM-YYYY.
+     *
+     * @return a String representation of the end date in input format.
+     */
+    public String getEndDateInInputFormat() {
+        return endDate.format(MEMBERSHIP_INPUT_DATE_FORMATTER);
+    }
+
+    /**
+     * Returns a String representation of the end date in UI format: DD/MM/YYYY.
+     *
+     * @return a String representation of the end date in UI format.
+     */
+    public String getEndDateInUiFormat() {
+        return endDate.format(MEMBERSHIP_UI_DATE_FORMATTER);
+    }
+
+    /**
+     * Returns the period of this membership.
+     *
+     * @return the period of this membership.
+     */
+    public String getPeriod() {
+        Period period = Period.between(startDate, endDate);
+        return period.getMonths() != 0 ? period.getMonths() + "m" : period.getYears() + "y";
     }
 
     /**
@@ -166,8 +229,10 @@ public class Membership {
      *
      * @return the JSON representation of this membership.
      */
+    @Override
     public String toString() {
-        return startDate.format(MEMBERSHIP_DATE_FORMATTER) + " " + endDate.format(MEMBERSHIP_DATE_FORMATTER);
+        return startDate.format(MEMBERSHIP_INPUT_DATE_FORMATTER)
+                + " " + endDate.format(MEMBERSHIP_INPUT_DATE_FORMATTER);
     }
 
     @Override

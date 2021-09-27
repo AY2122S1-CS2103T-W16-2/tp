@@ -37,13 +37,11 @@ public class MembershipTest {
 
     @Test
     public void newMembership_wrongUserInput_exceptionThrown() {
-        assertThrows(
-                IllegalArgumentException.class, "Invalid format for membership start date",
-                () -> new Membership("29-02-2021", "6m")
+        assertThrows(IllegalArgumentException.class, "Invalid format for membership start date", ()
+            -> new Membership("29-02-2021", "6m")
         );
-        assertThrows(
-                IllegalArgumentException.class, "Period is in invalid format.",
-                () -> new Membership("29-01-2021", "6")
+        assertThrows(IllegalArgumentException.class, "Period is in invalid format.", ()
+            -> new Membership("29-01-2021", "6")
         );
     }
 
@@ -56,21 +54,17 @@ public class MembershipTest {
 
     @Test
     public void newMembership_wrongJsonInput_exceptionThrown() {
-        assertThrows(
-                IllegalArgumentException.class, "Invalid JSON input for membership",
-                () -> new Membership("2021-02-21 2021-02-22")
+        assertThrows(IllegalArgumentException.class, "Invalid JSON input for membership", ()
+            -> new Membership("2021-02-21 2021-02-22")
         );
-        assertThrows(
-                IllegalArgumentException.class, "Invalid start date in membership json",
-                () -> new Membership("29-02-2021 01-01-2022")
+        assertThrows(IllegalArgumentException.class, "Invalid JSON input for membership", ()
+            -> new Membership("29-02-2021 01-01-2022")
         );
-        assertThrows(
-                IllegalArgumentException.class, "Invalid end date in membership json",
-                () -> new Membership("29-01-2021 29-02-2021")
+        assertThrows(IllegalArgumentException.class, "Invalid JSON input for membership", ()
+            -> new Membership("29-01-2021 29-02-2021")
         );
-        assertThrows(
-                IllegalArgumentException.class, "Membership end date is earlier than start date in JSON",
-                () -> new Membership("29-01-2022 29-01-2021")
+        assertThrows(IllegalArgumentException.class, "Invalid JSON input for membership", ()
+            -> new Membership("29-01-2022 29-01-2021")
         );
     }
 

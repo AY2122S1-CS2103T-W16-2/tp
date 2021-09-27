@@ -9,6 +9,7 @@ import ay2122s1_cs2103t_w16_2.btbb.commons.util.StringUtil;
 import ay2122s1_cs2103t_w16_2.btbb.exception.ParseException;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Address;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Email;
+import ay2122s1_cs2103t_w16_2.btbb.model.client.Membership;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Name;
 import ay2122s1_cs2103t_w16_2.btbb.model.client.Phone;
 
@@ -92,6 +93,22 @@ public class ParserUtil {
         return new Email(trimmedEmail);
     }
 
+    /**
+     * Parses {@code String membershipStartDate} and {@code String period} into an {@code Membership}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code email} is invalid.
+     */
+    public static Membership parseMembership(String membershipStartDate, String period) throws ParseException {
+        requireNonNull(membershipStartDate, period);
+        String trimmedMembershipStartDate = membershipStartDate.trim();
+        String trimmedPeriod = period.trim();
+        if (!Membership.isValidMembershipDate(trimmedMembershipStartDate)
+                || !Membership.isValidMembershipPeriod(trimmedPeriod)) {
+            throw new ParseException(Membership.MESSAGE_CONSTRAINTS);
+        }
+        return new Membership(trimmedMembershipStartDate, trimmedPeriod);
+    }
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given
      * {@code ArgumentMultimap}.

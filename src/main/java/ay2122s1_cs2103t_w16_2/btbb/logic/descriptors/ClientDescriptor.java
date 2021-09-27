@@ -34,13 +34,14 @@ public class ClientDescriptor {
         setPhone(toCopy.phone);
         setEmail(toCopy.email);
         setAddress(toCopy.address);
+        setMembership(toCopy.membership);
     }
 
     /**
      * Returns true if at least one field is edited.
      */
     public boolean isAnyFieldEdited() {
-        return CollectionUtil.isAnyNonNull(name, phone, email, address);
+        return CollectionUtil.isAnyNonNull(name, phone, email, address, membership);
     }
 
     public void setName(Name name) {
