@@ -14,8 +14,8 @@ class BookingTest {
     @Test
     public void equals() {
         // same values -> returns true
-        Booking randomBookingCopy = new BookingBuilder(BOOKING_FOR_DANIEL).build();
-        assertTrue(BOOKING_FOR_DANIEL.equals(randomBookingCopy));
+        Booking bookingCopy = new BookingBuilder(BOOKING_FOR_DANIEL).build();
+        assertTrue(BOOKING_FOR_DANIEL.equals(bookingCopy));
 
         // same object -> returns true
         assertTrue(BOOKING_FOR_ALICE.equals(BOOKING_FOR_ALICE));

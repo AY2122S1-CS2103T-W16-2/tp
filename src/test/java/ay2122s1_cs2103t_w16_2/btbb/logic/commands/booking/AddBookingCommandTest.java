@@ -31,7 +31,7 @@ class AddBookingCommandTest {
         Booking validBooking = new BookingBuilder().forClient(ALICE).build();
         BookingDescriptor validBookingDescriptor = new BookingDescriptorBuilder(validBooking).build();
 
-        // A booking can only be added if the client exists.
+        // A booking can only be added if the client already exists.
         modelStub.addClient(ALICE);
         CommandResult commandResult = new AddBookingCommand(validBookingDescriptor).execute(modelStub);
 

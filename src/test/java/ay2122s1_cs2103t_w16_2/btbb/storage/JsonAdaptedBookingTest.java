@@ -23,7 +23,6 @@ class JsonAdaptedBookingTest {
     public void setUp() {
         addressBook = new AddressBook();
         addressBook.addClient(FIONA);
-        addressBook.addBooking(BOOKING_FOR_FIONA);
     }
 
     @Test

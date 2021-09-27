@@ -30,8 +30,8 @@ class BookingDescriptorTest {
         assertFalse(DESC_BOOKING_AMY.equals(DESC_BOOKING_BOB));
 
         // different phone -> returns false
-        BookingDescriptor editedBooking = new BookingDescriptorBuilder(DESC_BOOKING_AMY)
+        BookingDescriptor editedBookingDescriptor = new BookingDescriptorBuilder(DESC_BOOKING_AMY)
                 .withPhone(VALID_PHONE_BOB).build();
-        assertFalse(DESC_BOOKING_AMY.equals(editedBooking));
+        assertFalse(DESC_BOOKING_AMY.equals(editedBookingDescriptor));
     }
 }
