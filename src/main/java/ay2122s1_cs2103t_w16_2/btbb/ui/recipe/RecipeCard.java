@@ -21,6 +21,9 @@ public class RecipeCard extends UiPart<Region> {
     private Label recipeName;
 
     @FXML
+    private Label recipePrice;
+
+    @FXML
     private Label recipeIngredients;
 
     /**
@@ -34,6 +37,7 @@ public class RecipeCard extends UiPart<Region> {
         this.recipe = recipe;
         this.id.setText(displayedIndex + ". ");
         recipeName.setText(recipe.getName().toString());
+        recipePrice.setText("(Price: $" + recipe.getPrice().toString() + ")");
         recipeIngredients.setText(recipe.getRecipeIngredients().toDisplayString());
     }
 

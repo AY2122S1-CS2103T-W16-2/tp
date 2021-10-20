@@ -38,7 +38,7 @@
 
     <columnConstraints>
         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="40.0"/>
-        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="30.0"/>
-        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="30.0"/>
+        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="28.0"/>
+        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="32.0"/>
     </columnConstraints>
 </GridPane>
